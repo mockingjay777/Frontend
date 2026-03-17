@@ -1,3 +1,5 @@
+SET SQL_SAFE_UPDATES = 0;
+
 -- CLEANUP: Clear existing data to avoid Primary Key conflicts if you re-run the script
 SET FOREIGN_KEY_CHECKS = 0;
 TRUNCATE TABLE `patients`;
