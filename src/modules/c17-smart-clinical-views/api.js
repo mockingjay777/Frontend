@@ -1,0 +1,1 @@
+//helper function to fetch data from FastAPI backend(port 8000)
