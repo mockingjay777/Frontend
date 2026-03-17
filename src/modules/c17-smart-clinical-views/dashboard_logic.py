@@ -7,7 +7,7 @@ def get_db_connection():
     return mysql.connector.connect(
         host="127.0.0.1",
         user="root",        # Change if you have a password
-        password="", 
+        password="Admin@123", 
         database="hospital"
     )
 
@@ -28,6 +28,9 @@ def render_smart_views():
     # --- SECTION 2: SMART MASTER VIEW (Joined Data) ---
     st.subheader("📋 Integrated Patient Insight (M1 + M25 + M43)")
     df_master = pd.read_sql("SELECT * FROM MasterClinicalInsight", conn)
+
+    #THIS LINE FIXES REPEATING INSTANCES
+    df_master = df_master.drop_duplicates(subset=['Patient_ID'])
     
     # Color coding based on the logic we built in the SQL View
     def color_status(val):
@@ -52,9 +55,13 @@ def render_smart_views():
             results.extend(result.fetchall())
         
         if results:
+            df_results = pd.DataFrame(results)
+            df_results = df_results.drop_duplicates(subset=['Patient_ID'])
             st.warning(f"Found {len(results)} patients staying > 7 days in {dept}")
-            st.table(pd.DataFrame(results))
+            st.table(df_results)
         else:
             st.success(f"No high-risk patients found in {dept}")
+
+    
             
     conn.close()

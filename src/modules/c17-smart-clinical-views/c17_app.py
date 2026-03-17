@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 # Import your actual module logic from a separate file in this same folder
-from .dashboard_logic import render_smart_views 
+from dashboard_logic import render_smart_views 
 
 def standalone_demo():
     st.set_page_config(page_title="C17 Demo", layout="wide")

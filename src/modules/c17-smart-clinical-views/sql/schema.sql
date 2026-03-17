@@ -132,6 +132,8 @@ BEGIN
     WHERE Record_ID = 1;
 END //
 
+DROP PROCEDURE IF EXISTS GetHighRiskPatients;
+
 CREATE PROCEDURE GetHighRiskPatients(IN dept_name VARCHAR(50))
 BEGIN
     SELECT p.Patient_ID, p.Condition_Name, p.Length_of_Stay
@@ -150,16 +152,23 @@ END //
 DELIMITER ;
 
 -- 5. MASTER INTEGRATED VIEW
+USE hospital;
+
 CREATE OR REPLACE VIEW MasterClinicalInsight AS
 SELECT 
-    p.Patient_ID, p.Age, p.Gender, d.Department_Name, p.Condition_Name, p.Outcome,
+    p.Patient_ID, 
+    p.Age, 
+    p.Gender, 
+    -- We use MAX or DISTINCT to ensure we don't get multiple rows if a condition exists in two depts
+    (SELECT d.Department_Name FROM departments d WHERE d.Condition_Name = p.Condition_Name LIMIT 1) AS Department_Name,
+    p.Condition_Name, 
+    p.Outcome,
     CASE 
         WHEN p.Length_of_Stay > 7 THEN 'High Resource Use'
         WHEN p.Readmission = 'Yes' THEN 'Follow-up Required'
         ELSE 'Standard Care'
     END AS Clinical_Status
-FROM patients p
-LEFT JOIN departments d ON p.Condition_Name = d.Condition_Name;
+FROM patients p;
 
 -- 6. INDEXES
 CREATE INDEX idx_patient_condition ON patients(Condition_Name);
