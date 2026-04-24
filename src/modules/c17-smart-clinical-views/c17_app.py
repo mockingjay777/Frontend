@@ -1,10 +1,8 @@
-# FILE: src/modules/c17-smart-clinical-views/c17_app.py
 import streamlit as st
 import sys
 import os
 
-# Ensure the module's own directory is on the path for relative imports
-sys.path.insert(0, os.path.dirname(__file__))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from dashboard_logic import render_smart_views
 
