@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: c17-smart-clinical-views
+    env: python
+    region: oregon
+    plan: free
+    pythonVersion: 3.11
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run src/modules/c17-smart-clinical-views/c17_app.py --server.port=$PORT --server.address=0.0.0.0
+    envVars:
+      - key: DB_HOST
+        value: ${DB_HOST}
+      - key: DB_PORT
+        value: ${DB_PORT}
+      - key: DB_USER
+        value: ${DB_USER}
+      - key: DB_PASSWORD
+        value: ${DB_PASSWORD}
+      - key: DB_NAME
+        value: hospital

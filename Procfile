@@ -1,0 +1,1 @@
+web: streamlit run src/modules/c17-smart-clinical-views/c17_app.py --server.port=$PORT --server.address=0.0.0.0

@@ -1,3 +1,6 @@
 streamlit
 streamlit-option-menu
 matplotlib
+mysql-connector-python
+python-dotenv
+pandas
