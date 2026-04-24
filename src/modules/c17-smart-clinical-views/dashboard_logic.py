@@ -35,7 +35,7 @@ def render_smart_views():
         color = 'red' if val == 'High Resource Use' else 'orange' if val == 'Follow-up Required' else 'green'
         return f'color: {color}'
 
-    st.dataframe(df_master.style.applymap(color_status, subset=['Clinical_Status']))
+    st.dataframe(df_master.style.map(color_status, subset=['Clinical_Status']))
 
     # --- SECTION 3: STORED PROCEDURE DEMO (Dummy Data) ---
     st.divider()
