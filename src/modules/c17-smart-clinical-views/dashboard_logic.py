@@ -1,11 +1,8 @@
-#define the function render_smart_views for app to work
 import streamlit as st
 import pandas as pd
 
 
-
-
-
+def render_smart_views():
     st.header("🏥 Smart Clinical Decision Support (Demo Mode)")
 
     # --- SECTION 1: REAL-TIME MONITORING (Dummy Data) ---
@@ -33,9 +30,11 @@ import pandas as pd
     col1, col2 = st.columns(2)
     col1.metric("Total Admitted", total_patients)
     col2.metric("Average Patient Age", f"{avg_age:.1f}")
+
     def color_status(val):
         color = 'red' if val == 'High Resource Use' else 'orange' if val == 'Follow-up Required' else 'green'
         return f'color: {color}'
+
     st.dataframe(df_master.style.applymap(color_status, subset=['Clinical_Status']))
 
     # --- SECTION 3: STORED PROCEDURE DEMO (Dummy Data) ---
@@ -43,7 +42,6 @@ import pandas as pd
     st.subheader("🔍 Clinical Filter: Identify High-Risk Patients")
     dept = st.selectbox("Select Department to scan:", ["Cardiology", "Neurology", "Oncology", "Endocrinology"])
     if st.button("Run Clinical Scan"):
-        # Dummy filter: show patients with Age > 65 as high risk
         df_results = df_master[df_master['Age'] > 65]
         if not df_results.empty:
             st.warning(f"Found {len(df_results)} patients staying > 7 days in {dept}")
